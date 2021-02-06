@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const Owlbot = require('owlbot-js');
+const client = Owlbot(process.env.OWLBOT_TOKEN);
 
 router.get('/:word', async (req, res) => {
   const word = req.params.word;
-  const client = Owlbot(process.env.OWLBOT_TOKEN);
+  console.log(process.env.OWLBOT_TOKEN);
+  console.log(word, client, Owlbot);
   try {
     const result = await client.define(word);
     if (!result) {
