@@ -1,4 +1,5 @@
 const { default: axios } = require('axios');
+const fetch = require('node-fetch');
 
 const router = require('express').Router();
 // const Owlbot = require('owlbot-js');
@@ -9,17 +10,21 @@ router.get('/:word', async (req, res) => {
   const word = req.params.word;
 
   try {
-    const result = await axios(`https://owlbot.info/api/v4/dictionary/${word}`, {
+    // const result =
+    fetch(`https://owlbot.info/api/v4/dictionary/${word}`, {
       headers: {
         Authorization: `Token ${process.env.OWLBOT_TOKEN}`
       }
-    });
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data) {
+          throw new Error('Not Found');
+        }
+        res.send(data);
+      });
 
-    const data = await result.data;
-    if (!data) {
-      throw new Error('Not Found');
-    }
-    res.send(data);
+    // const data = await result.data;
   } catch (error) {
     res.status(404).json({
       success: false,
