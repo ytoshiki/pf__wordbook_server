@@ -18,7 +18,7 @@ router.get('/:text', async (req, res) => {
   try {
     const result = await axios.get(`${endpoint}&q=${text}&image_type=photo&per_page=5&pretty=true`);
 
-    if (!result.data) {
+    if (!result.data.hits.length) {
       throw new Error('No Image Found');
     }
     res.json({

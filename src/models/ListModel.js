@@ -14,7 +14,8 @@ const ListSchema = new mongoose.Schema(
       }
     ],
     memo: {
-      type: String
+      type: String,
+      default: null
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,

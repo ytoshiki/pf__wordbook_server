@@ -14,7 +14,7 @@ router.post('/signup', async (req, res) => {
   const reqUser = new UserSchema(req.body);
   try {
     const user = await reqUser.save();
-    const token = await user.generateToken();
+    const token = await user.generateToken()
 
     res.status(201).json({
       success: true,
@@ -22,11 +22,10 @@ router.post('/signup', async (req, res) => {
       token
     });
   } catch (error) {
-    console.log(error);
     res.status(400).json({
       success: false,
-      data: []
-    });
+      message: error.message
+    });;
   }
 });
 
