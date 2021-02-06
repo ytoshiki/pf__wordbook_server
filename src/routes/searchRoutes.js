@@ -18,10 +18,16 @@ router.get('/:word', async (req, res) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (!data) {
+        if (!data.definitions) {
           throw new Error('Not Found');
         }
         res.send(data);
+      })
+      .catch((err) => {
+        res.status(404).json({
+          success: false,
+          message: 'Not Found'
+        });
       });
 
     // const data = await result.data;
