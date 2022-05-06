@@ -45,13 +45,13 @@ router.post('/signin', async (req, res) => {
     const user = await UserSchema.findOne({ email });
 
     if (!user) {
-      throw new Error('User Not Found');
+      throw new Error('Email Not Found');
     }
 
     const passwordMatch = await UserSchema.compareHashedPassword(password, user.password);
 
     if (!passwordMatch) {
-      throw new Error('User Not Found');
+      throw new Error("Password and Email don't match");
     }
 
     const token = await user.generateToken();
@@ -62,6 +62,7 @@ router.post('/signin', async (req, res) => {
       token
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
       message: 'User Not Found'
